@@ -8,19 +8,19 @@
 <button id="btn-off">off</button>
 
 <script>
-document.getElementById('btn-on').addEventListener('click', () => {
-	fetch('./switch/4433')
-		.then(() => {
-			console.log('done');
-		});
-});
+    document.getElementById('btn-on').addEventListener('click', () => {
+        fetch('./switch/4433')
+            .then(() => {
+                console.log('done');
+            });
+    });
 
-document.getElementById('btn-off').addEventListener('click', () => {
-	fetch('./switch/4436')
-		.then(() => {
-			console.log('done');
-		});
-});
+    document.getElementById('btn-off').addEventListener('click', () => {
+        fetch('./switch/4436')
+            .then(() => {
+                console.log('done');
+            });
+    });
 </script>
 
 </body>
