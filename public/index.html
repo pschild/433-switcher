@@ -4,22 +4,36 @@
 </head>
 <body>
 
-<button id="btn-on">on</button>
-<button id="btn-off">off</button>
-
 <script>
-    document.getElementById('btn-on').addEventListener('click', () => {
-        fetch('./switch/4433')
-            .then(() => {
-                console.log('done');
-            });
-    });
+    let switches = [
+        { name: 'A', codes: { on: 1361, off: 1364 } },
+        { name: 'B', codes: { on: 4433, off: 4436 } },
+        { name: 'C', codes: { on: 5201, off: 5204 } }
+    ];
 
-    document.getElementById('btn-off').addEventListener('click', () => {
-        fetch('./switch/4436')
-            .then(() => {
-                console.log('done');
-            });
+    switches.forEach((switchData) => {
+        let label;
+
+        let headline = document.createElement('h2');
+        label = document.createTextNode(switchData.name);
+        headline.appendChild(label);
+        document.body.appendChild(headline);
+
+        let buttonOn = document.createElement('button');
+        label = document.createTextNode('on');
+        buttonOn.appendChild(label);
+        buttonOn.addEventListener('click', () => {
+            fetch(`./switch/${switchData.codes.on}`).then(() => { console.log('done'); });
+        });
+        document.body.appendChild(buttonOn);
+
+        let buttonOff = document.createElement('button');
+        label = document.createTextNode('off');
+        buttonOff.appendChild(label);
+        buttonOff.addEventListener('click', () => {
+            fetch(`./switch/${switchData.codes.off}`).then(() => { console.log('done'); });
+        });
+        document.body.appendChild(buttonOff);
     });
 </script>
 
