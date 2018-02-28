@@ -24,7 +24,12 @@ rfEmitter = rpi433.emitter({
 });
 
 app.get('/switch/:code', function (req, res) {
-    let code = +req.params.code; // 4433 = on, 4436 = off for Switch "B"
+    /*
+    A: 1361 = on, 1364 = off
+    B: 4433 = on, 4436 = off
+    C: 5201 = on, 5204 = off
+    */
+    let code = +req.params.code;
     console.log(code);
     rfEmitter.sendCode(code)
         .then((stdout) => {
