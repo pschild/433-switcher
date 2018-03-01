@@ -42,6 +42,6 @@ app.get('/switch/:code', function (req, res) {
         });
 });
 
-app.listen(8080, () => {
-    console.log('Server is running on Port 8080');
+app.listen(3000, () => {
+    console.log('Server is running on Port 3000');
 });
