@@ -1,5 +1,5 @@
 {
-  "name": "433-switch",
+  "name": "433-switch-alexa",
   "version": "0.0.1",
   "description": "",
   "repository": "https://github.com/pschild/433-switcher.git",
@@ -10,8 +10,6 @@
   "author": "Philippe Schild",
   "license": "MIT",
   "dependencies": {
-    "body-parser": "^1.18.2",
-    "express": "^4.16.2",
-    "rpi-433": "^2.1.0"
+    "alexa-sdk": "^1.0.25"
   }
 }
