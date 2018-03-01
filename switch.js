@@ -1,6 +1,14 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+
+const privateKey  = fs.readFileSync('../../dehydrated/certs/pschild.duckdns.org/privkey.pem', 'utf8');
+const certificate = fs.readFileSync('../../dehydrated/certs/pschild.duckdns.org/fullchain.pem', 'utf8');
+const credentials = {key: privateKey, cert: certificate};
+
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -42,6 +50,8 @@ app.get('/switch/:code', function (req, res) {
         });
 });
 
-app.listen(3000, () => {
-    console.log('Server is running on Port 3000');
-});
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(3000, () => console.log('HTTP app listening on port 3000!'));
+httpsServer.listen(3443, () => console.log('HTTPS app listening on port 3443!'));
