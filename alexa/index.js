@@ -7,11 +7,11 @@ const handlers = {
     },
     
     'SwitchIntent': function() {
-        let switchName = this.event.request.intent.slots.SWITCH_NAME.value;
-        let switchAction = this.event.request.intent.slots.SWITCH_ACTION.value;
-        // console.log(switchName, switchAction);
+        let switchNameSlot = this.event.request.intent.slots.SWITCH_NAME;
+        let switchActionSlot = this.event.request.intent.slots.SWITCH_ACTION;
+        // console.log(switchNameSlot.value, switchActionSlot.value);
 
-        post({ switchName: switchName, switchAction: switchAction }, (response) => {
+        post({ switchNameSlot: switchNameSlot, switchActionSlot: switchActionSlot }, (response) => {
             // console.log('received by RPi:' + response);
             this.response.speak('Okay');
             this.emit(':responseReady');

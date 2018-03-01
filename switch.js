@@ -51,11 +51,13 @@ app.get('/switch/:code', function (req, res) {
 });
 
 app.post('/alexa', function (req, res) {
-    console.log(JSON.parse(req.body));
+    let { switchNameSlot, switchActionSlot } = req.body.payload;
+
+    console.log(switchNameSlot);
 
     res.json({
         'success': true,
-        'result': JSON.parse(req.body)
+        'result': req.body
     });
 });
 
