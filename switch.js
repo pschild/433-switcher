@@ -53,12 +53,36 @@ app.get('/switch/:code', function (req, res) {
 app.post('/alexa', function (req, res) {
     let { switchNameSlot, switchActionSlot } = req.body.payload;
 
-    console.log(switchNameSlot);
-
-    res.json({
-        'success': true,
-        'result': req.body
-    });
+    let spokenNameValue = switchNameSlot.value;
+    let mappedNameFromSynonym = switchNameSlot.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+    
+    let spokenActionValue = switchActionSlot.value;
+    let mappedActionFromSynonym = switchActionSlot.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+    
+    console.log(mappedNameFromSynonym, mappedActionFromSynonym);
+    
+    let code;
+    switch (mappedNameFromSynonym) {
+		case 'Fernseher':
+		    code = mappedActionFromSynonym === 'ein' ? 1361 : 1364;
+		    break;
+		case 'Test':
+		    code = mappedActionFromSynonym === 'ein' ? 4433 : 4436;
+		    break;
+		case 'Anlage':
+		    code = mappedActionFromSynonym === 'ein' ? 5201 : 5204;
+		    break;
+	}
+	
+	rfEmitter.sendCode(code)
+        .then((stdout) => {
+            res.json({
+                'success': true,
+                'result': stdout
+            });
+        }, (error) => {
+            console.log('Error', error);
+        });
 });
 
 let httpServer = http.createServer(app);
