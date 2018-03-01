@@ -50,8 +50,17 @@ app.get('/switch/:code', function (req, res) {
         });
 });
 
-var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
+app.post('/alexa', function (req, res) {
+    console.log(JSON.parse(req.body));
+
+    res.json({
+        'success': true,
+        'result': JSON.parse(req.body)
+    });
+});
+
+let httpServer = http.createServer(app);
+let httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(3000, () => console.log('HTTP app listening on port 3000!'));
 httpsServer.listen(3443, () => console.log('HTTPS app listening on port 3443!'));
