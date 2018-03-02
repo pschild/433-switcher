@@ -57,6 +57,7 @@ function get(switchName, switchAction, callback) {
 
 function post(payload, callback) {
     let body = JSON.stringify({'payload': payload});
+    let authToken = Buffer.from(`${process.env.USERNAME}:${process.env.PASSWORD}`).toString('base64');
 
     const options = {
         hostname: `pschild.duckdns.org`,
@@ -66,7 +67,7 @@ function post(payload, callback) {
         headers: {
             "Content-Type": "application/json",
             "Content-Length": Buffer.byteLength(body),
-            "Authorization": `Basic ${process.env.USER}:${process.env.PASSWORD}`
+            "Authorization": `Basic ${authToken}`
         }
     };
 
