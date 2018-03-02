@@ -5,15 +5,14 @@ const basicAuth = require('express-basic-auth');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
+require('dotenv').config({path: path.join(__dirname, '.env')});
 
 const privateKey = fs.readFileSync('../../dehydrated/certs/pschild.duckdns.org/privkey.pem', 'utf8');
 const certificate = fs.readFileSync('../../dehydrated/certs/pschild.duckdns.org/fullchain.pem', 'utf8');
 const credentials = {key: privateKey, cert: certificate};
 
 const app = express();
-app.use(basicAuth({
-    users: { 'admin': 'supersecret' }
-}));
+app.use(basicAuth({ authorizer: (username, password) => username === process.env.USER && password === process.env.PASSWORD}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
