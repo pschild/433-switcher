@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const basicAuth = require('express-basic-auth');
 const fs = require('fs');
 const http = require('http');
 const https = require('https');
@@ -10,6 +11,9 @@ const certificate = fs.readFileSync('../../dehydrated/certs/pschild.duckdns.org/
 const credentials = {key: privateKey, cert: certificate};
 
 const app = express();
+app.use(basicAuth({
+    users: { 'admin': 'supersecret' }
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));

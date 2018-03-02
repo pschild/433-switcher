@@ -1,5 +1,7 @@
+const path = require('path');
 const Alexa = require('alexa-sdk');
 const https = require('https');
+require('dotenv').config({path: path.join(__dirname, '.env')});
 
 const handlers = {
     'LaunchRequest': function () {
@@ -63,7 +65,8 @@ function post(payload, callback) {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
-            "Content-Length": Buffer.byteLength(body)
+            "Content-Length": Buffer.byteLength(body),
+            "Authorization": `Basic ${process.env.USER}:${process.env.PASSWORD}`
         }
     };
 
