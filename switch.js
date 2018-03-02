@@ -12,7 +12,10 @@ const certificate = fs.readFileSync('../../dehydrated/certs/pschild.duckdns.org/
 const credentials = {key: privateKey, cert: certificate};
 
 const app = express();
-app.use(basicAuth({ authorizer: (username, password) => username === process.env.USER && password === process.env.PASSWORD}));
+app.use(basicAuth({
+    authorizer: (username, password) => username === process.env.USERNAME && password === process.env.PASSWORD,
+    unauthorizedResponse: (req) => req.auth ? 'Invalid credentials!' : 'No credentials provided!'
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
