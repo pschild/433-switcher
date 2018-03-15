@@ -60,22 +60,42 @@ app.post('/alexa', function (req, res) {
     let {switchNameSlot, switchActionSlot} = req.body.payload;
 
     let spokenNameValue = switchNameSlot.value;
-    let mappedNameFromSynonym = switchNameSlot.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+    let synonymResolutionsForSwitch = switchNameSlot.resolutions.resolutionsPerAuthority[0].values;
+    if (!synonymResolutionsForSwitch) {
+		console.log('Error', `Ich konnte eine Steckdose mit dem Namen ${spokenNameValue} nicht finden.`);
+		res.json({
+		    'success': false,
+		    'result': `Ich konnte eine Steckdose mit dem Namen ${spokenNameValue} nicht finden.`
+	    });
+	    return;
+	}
+	
+    let mappedNameFromSynonym = synonymResolutionsForSwitch[0].value.name;
 
     let spokenActionValue = switchActionSlot.value;
-    let mappedActionFromSynonym = switchActionSlot.resolutions.resolutionsPerAuthority[0].values[0].value.name;
+    let synonymResolutionsForAction = switchActionSlot.resolutions.resolutionsPerAuthority[0].values;
+    if (!synonymResolutionsForAction) {
+		console.log('Error', `Ich konnte den Befehl ${spokenActionValue} nicht ausführen.`);
+		res.json({
+		    'success': false,
+		    'result': `Ich konnte den Befehl ${spokenActionValue} nicht ausführen.`
+	    });
+	    return;
+	}
+	
+    let mappedActionFromSynonym = synonymResolutionsForAction[0].value.name;
 
     console.log(mappedNameFromSynonym, mappedActionFromSynonym);
 
     let code;
     switch (mappedNameFromSynonym) {
-        case 'Fernseher':
+        case 'A':
             code = mappedActionFromSynonym === 'ein' ? 1361 : 1364;
             break;
-        case 'Test':
+        case 'B':
             code = mappedActionFromSynonym === 'ein' ? 4433 : 4436;
             break;
-        case 'Anlage':
+        case 'C':
             code = mappedActionFromSynonym === 'ein' ? 5201 : 5204;
             break;
     }

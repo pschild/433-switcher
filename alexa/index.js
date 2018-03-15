@@ -15,8 +15,13 @@ const handlers = {
 
         post({ switchNameSlot: switchNameSlot, switchActionSlot: switchActionSlot }, (response) => {
             // console.log('received by RPi:' + response);
-            this.response.speak('Okay');
-            this.emit(':responseReady');
+            if (response.success) {
+				this.response.speak('Okay');
+				this.emit(':responseReady');
+			} else {
+				this.response.speak(response.result);
+				this.emit(':ask', 'Versuch es noch einmal: was soll ich schalten?');
+			}
         });
     },
     
