@@ -62,27 +62,27 @@ app.post('/alexa', function (req, res) {
     let spokenNameValue = switchNameSlot.value;
     let synonymResolutionsForSwitch = switchNameSlot.resolutions.resolutionsPerAuthority[0].values;
     if (!synonymResolutionsForSwitch) {
-		console.log('Error', `Ich konnte eine Steckdose mit dem Namen ${spokenNameValue} nicht finden.`);
-		res.json({
-		    'success': false,
-		    'result': `Ich konnte eine Steckdose mit dem Namen ${spokenNameValue} nicht finden.`
-	    });
-	    return;
-	}
-	
+        console.log('Error', `Ich konnte eine Steckdose mit dem Namen ${spokenNameValue} nicht finden.`);
+        res.json({
+            'success': false,
+            'result': `Ich konnte eine Steckdose mit dem Namen ${spokenNameValue} nicht finden.`
+        });
+        return;
+    }
+
     let mappedNameFromSynonym = synonymResolutionsForSwitch[0].value.name;
 
     let spokenActionValue = switchActionSlot.value;
     let synonymResolutionsForAction = switchActionSlot.resolutions.resolutionsPerAuthority[0].values;
     if (!synonymResolutionsForAction) {
-		console.log('Error', `Ich konnte den Befehl ${spokenActionValue} nicht ausführen.`);
-		res.json({
-		    'success': false,
-		    'result': `Ich konnte den Befehl ${spokenActionValue} nicht ausführen.`
-	    });
-	    return;
-	}
-	
+        console.log('Error', `Ich konnte den Befehl ${spokenActionValue} nicht ausführen.`);
+        res.json({
+            'success': false,
+            'result': `Ich konnte den Befehl ${spokenActionValue} nicht ausführen.`
+        });
+        return;
+    }
+
     let mappedActionFromSynonym = synonymResolutionsForAction[0].value.name;
 
     console.log(mappedNameFromSynonym, mappedActionFromSynonym);
